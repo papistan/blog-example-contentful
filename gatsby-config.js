@@ -5,14 +5,12 @@ try {
   contentfulConfig = require('./.contentful')
 } catch (e) {
   contentfulConfig = {
-    production: {
-      host: process.env.CONTENTFUL_HOST,
-      spaceId: process.env.CONTENTFUL_SPACE_ID,
-      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-    },
+    host: process.env.CONTENTFUL_HOST,
+    spaceId: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
   }
 } finally {
-  const { spaceId, accessToken } = contentfulConfig.production
+  const { spaceId, accessToken } = contentfulConfig
   if (!spaceId || !accessToken) {
     throw new Error('Contentful space ID and access token need to be provided.')
   }
@@ -62,10 +60,7 @@ module.exports = {
     `gatsby-plugin-catch-links`,
     {
       resolve: 'gatsby-source-contentful',
-      options:
-        process.env.NODE_ENV === 'development'
-          ? contentfulConfig.development
-          : contentfulConfig.production,
+      options: contentfulConfig,
     },
     {
       resolve: 'gatsby-plugin-google-analytics',
